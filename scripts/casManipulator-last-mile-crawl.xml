@@ -1,0 +1,22 @@
+<manipulatorConfig>
+    <!-- First ModifierScriptManipulator for splitting age ranges -->
+    <manipulator class="com.endeca.cas.extension.manipulator.ModifierScriptManipulator">
+        <property name="moduleId" value="com.endeca.module.splitter" />
+        <property name="moduleProperty">
+            <property name="inputField" value="ageRange" />
+            <property name="outputField" value="ageRange" />
+            <property name="delimiter" value="," />
+            <property name="trimValues" value="true" />
+        </property>
+    </manipulator>
+
+    <!-- Second ModifierScriptManipulator for another manipulation (e.g., formatting a different field) -->
+    <manipulator class="com.endeca.cas.extension.manipulator.ModifierScriptManipulator">
+        <property name="moduleId" value="com.endeca.module.formatter" />
+        <property name="moduleProperty">
+            <property name="inputField" value="price" />
+            <property name="outputField" value="formattedPrice" />
+            <property name="formatType" value="currency" />
+        </property>
+    </manipulator>
+</manipulatorConfig>
