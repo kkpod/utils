@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Append URL Parameter</title>
+</head>
+<body>
+    <label for="inputValue">Enter Value: </label>
+    <input type="text" id="inputValue" placeholder="Enter a value">
+    <br><br>
+    <a href="#" id="submitLink" onclick="openInNewTab()">Click to open in new tab</a>
+
+    <script>
+        function openInNewTab() {
+            var inputValue = document.getElementById('inputValue').value;
+            var baseUrl = "https://example.com";  // Replace with the desired base URL
+            var newUrl = baseUrl + "?param=" + encodeURIComponent(inputValue);
+            window.open(newUrl, '_blank');  // Opens the URL in a new tab
+        }
+    </script>
+</body>
+</html>
