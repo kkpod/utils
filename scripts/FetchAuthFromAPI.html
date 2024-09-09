@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch JSON with Headers, Proxy, and Data</title>
+</head>
+<body>
+    <label for="inputValue">Enter Value: </label>
+    <input type="text" id="inputValue" placeholder="Enter a value" oninput="updateUrl()">
+    <br><br>
+    <a href="#" id="submitLink" onclick="openInNewTab()">Click to open in new tab</a>
+    <p id="fullUrl"></p> <!-- Element to display the full URL -->
+    
+    <br><br>
+    <button onclick="fetchJson()">Fetch Data</button> <!-- Button to trigger fetch -->
+    <p id="jsonResponse"></p> <!-- Element to display JSON response -->
+
+    <script>
+        var baseUrl = "https://example.com";  // Replace with the desired base URL
+
+        // Updates the full URL as the user types
+        function updateUrl() {
+            var inputValue = document.getElementById('inputValue').value;
+            var newUrl = baseUrl + "?param=" + encodeURIComponent(inputValue);
+            document.getElementById('fullUrl').textContent = "Full URL: " + newUrl;
+        }
+
+        // Opens the full URL in a new tab
+        function openInNewTab() {
+            var inputValue = document.getElementById('inputValue').value;
+            var newUrl = baseUrl + "?param=" + encodeURIComponent(inputValue);
+            window.open(newUrl, '_blank');
+        }
+
+        // Function to fetch JSON data from an API with headers, proxy, and data
+        function fetchJson() {
+            var url = "https://example.com/api"; // Replace with your actual API URL
+
+            // Data to send in the body of the POST request
+            var data = {
+                key1: "value1",
+                key2: "value2"
+            };
+
+            // Options for the fetch request
+            var options = {
+                method: "POST", // You can change to "GET" or other HTTP methods if needed
+                headers: {
+                    "Content-Type": "application/json", // Set your headers
+                    "Header-1": "Value for Header-1",
+                    "Header-2": "Value for Header-2"
+                },
+                body: JSON.stringify(data), // Stringify the data for the body
+                // Using proxy is typically done server-side, but you can set up a proxy in the browser as well
+                // For now, we're omitting it because browsers have limitations with proxy handling
+            };
+
+            // Perform the fetch request
+            fetch(url, options)
+                .then(response => {
+                    // Check if the response is OK
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Display one of the key-value pairs from the JSON response
+                    document.getElementById('jsonResponse').textContent = "Response: " + JSON.stringify(data);
+                })
+                .catch(error => console.error('Error fetching JSON:', error)); // Handle errors
+        }
+    </script>
+</body>
+</html>
