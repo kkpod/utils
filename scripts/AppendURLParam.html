@@ -10,13 +10,19 @@
     <input type="text" id="inputValue" placeholder="Enter a value">
     <br><br>
     <a href="#" id="submitLink" onclick="openInNewTab()">Click to open in new tab</a>
+    <p id="fullUrl"></p> <!-- Element to display the full URL -->
 
     <script>
         function openInNewTab() {
             var inputValue = document.getElementById('inputValue').value;
             var baseUrl = "https://example.com";  // Replace with the desired base URL
             var newUrl = baseUrl + "?param=" + encodeURIComponent(inputValue);
-            window.open(newUrl, '_blank');  // Opens the URL in a new tab
+
+            // Display the full URL below
+            document.getElementById('fullUrl').textContent = "Full URL: " + newUrl;
+
+            // Open the URL in a new tab
+            window.open(newUrl, '_blank');
         }
     </script>
 </body>
