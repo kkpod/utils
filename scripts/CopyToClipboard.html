@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parse JSON, Generate URL, and Copy Text</title>
+</head>
+<body>
+    <h3>Enter JSON Response:</h3>
+    <!-- Textarea for JSON input -->
+    <textarea id="jsonInput" rows="10" cols="50" placeholder="Paste JSON response here"></textarea>
+    <br><br>
+
+    <!-- Display the full URL -->
+    <p id="fullUrl"></p>
+
+    <!-- Link with dynamic href -->
+    <a href="#" id="dynamicLink" target="_blank">Open Link</a>
+
+    <br><br>
+    <!-- Copy button -->
+    <button onclick="copyToClipboard()">Copy URL</button>
+
+    <script>
+        const baseUrl = "https://example.com";  // Base URL
+
+        // Function to parse JSON and append aaa_code to the URL
+        document.getElementById('jsonInput').addEventListener('input', function() {
+            const jsonInput = document.getElementById('jsonInput').value;
+            
+            try {
+                // Parse the JSON input
+                const jsonResponse = JSON.parse(jsonInput);
+                
+                // Extract the "aaa_code" value
+                const aaaCode = jsonResponse.aaa_code;
+
+                if (aaaCode) {
+                    // Construct the full URL by appending the aaa_code
+                    const newUrl = `${baseUrl}?aaa_code=${encodeURIComponent(aaaCode)}`;
+
+                    // Display the full URL
+                    document.getElementById('fullUrl').textContent = newUrl;
+                    
+                    // Set the href attribute of the link
+                    document.getElementById('dynamicLink').setAttribute('href', newUrl);
+                } else {
+                    document.getElementById('fullUrl').textContent = "aaa_code not found in the JSON";
+                }
+            } catch (error) {
+                document.getElementById('fullUrl').textContent = "Invalid JSON format";
+            }
+        });
+
+        // Function to copy the URL text to the clipboard
+        function copyToClipboard() {
+            // Get the URL text to copy
+            const fullUrl = document.getElementById('fullUrl').textContent;
+
+            // Create a temporary input element to hold the text
+            const tempInput = document.createElement('input');
+            tempInput.value = fullUrl;
+
+            // Append the input element to the body (needed for copying)
+            document.body.appendChild(tempInput);
+
+            // Select the text inside the input element
+            tempInput.select();
+            tempInput.setSelectionRange(0, 99999); // For mobile devices
+
+            // Copy the selected text
+            document.execCommand('copy');
+
+            // Remove the temporary input element
+            document.body.removeChild(tempInput);
+
+            // Notify the user (optional)
+            alert("Copied the URL: " + fullUrl);
+        }
+
+        function copyToClipboardUpdated() {
+            const fullUrl = document.getElementById('fullUrl').textContent;
+            
+            // Use the modern Clipboard API
+            navigator.clipboard.writeText(fullUrl)
+                .then(() => {
+                    // Notify the user (optional)
+                    alert("Copied the URL: " + fullUrl);
+                })
+                .catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+        }
+      
+    </script>
+</body>
+</html>
