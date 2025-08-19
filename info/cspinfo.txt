@@ -1,0 +1,23 @@
+
+I wanted to provide an update on the recent work done to align the current application with the updated Content Security Policy (CSP) changes. Specifically, we’ve removed the use of `unsafe-eval`, which is a significant step toward improving security.
+
+However, while this change resolves some issues for the application itself, it does **not** address potential impacts on other scripts that are part of the **Global Header** shared across multiple applications, nor does it account for **third-party scripts** integrated into the site.
+
+### Key Points to Consider:
+
+1. **Global Header Impact:**
+
+   * The Global Header is used by multiple applications, and some of the scripts included in it may still rely on features like `eval()` or other risky practices that could be blocked under the new CSP rules.
+   * Updating the CSP at the **server level** is crucial to ensure compatibility with these other scripts and to avoid any disruptions across different applications sharing the header.
+
+2. **Third-Party Scripts:**
+
+   * Many third-party JavaScript libraries or services (analytics, ads, etc.) may also be impacted by the current CSP configuration.
+   * We need to carefully review the full list of third-party sources and update the server-level CSP to allow these scripts to run without compromising security.
+
+### Suggested Next Steps:
+
+* **Review and Update CSP at Server Level:** We recommend working with the server-side configuration to adjust the CSP in a way that supports both the new security measures and the functionality of the shared Global Header and third-party integrations.
+* **Testing:** Extensive testing should be done to ensure that these changes don’t break any other features or introduce security vulnerabilities.
+
+By addressing the CSP at the server level, we can ensure a secure, functional experience across all applications and services using the Global Header, without risking conflicts or failures in functionality.
